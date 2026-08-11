@@ -4,6 +4,6 @@ import { registrarGato } from "../controllers/gato.controller.js";
 
 const router = express.Router();
 
-router.post("/gato", registrarGato);
+router.post("/gatos", registrarGato);
 
 export default router;
