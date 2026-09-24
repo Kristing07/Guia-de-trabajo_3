@@ -166,6 +166,37 @@
             document.querySelector(".card").scrollIntoView({ behavior: "smooth" });
         }
 
+        // ========== Eliminar gato ==========
+        async function eliminarGato(id, nombre) {
+            const confirmar = confirm(`¿Seguro que deseas eliminar a "${nombre}"? Esta acción no se puede deshacer.`);
+            if (!confirmar) return;
+
+            try {
+                const respuesta = await fetch(`${BACKEND_URL}/gato/${id}`, {
+                    method: "DELETE",
+                });
+
+                const data = await respuesta.json();
+
+                if (!respuesta.ok) {
+                    mostrarMensaje(data.mensaje || "Error al eliminar el gato", "danger");
+                    return;
+                }
+
+                mostrarMensaje(data.mensaje, "success");
+
+                // Si estábamos editando justo el gato eliminado, limpiamos el formulario
+                if (document.getElementById("gatoId").value === id) {
+                    limpiarFormulario();
+                }
+
+                cargarGatos();
+            } catch (error) {
+                console.error(error);
+                mostrarMensaje("Error de conexión con el servidor.", "danger");
+            }
+        }
+
         // ========== Limpiar formulario ==========
         function limpiarFormulario() {
             document.getElementById("formGato").reset();
@@ -222,10 +253,16 @@
                                         Registrado: ${new Date(gato.fecha).toLocaleDateString('es-ES')}
                                     </small>
                                 </p>
-                                <button class="btn btn-sm btn-outline-primary mt-auto"
-                                        onclick="editarGato(gatosCargados.find(g => g.id === '${escaparHtml(gato.id)}'))">
-                                    Actualizar
-                                </button>
+                                <div class="mt-auto d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-primary flex-fill"
+                                            onclick="editarGato(gatosCargados.find(g => g.id === '${escaparHtml(gato.id)}'))">
+                                        Actualizar
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger flex-fill"
+                                            onclick="eliminarGato('${escaparHtml(gato.id)}', '${escaparHtml(gato.nombre)}')">
+                                        Eliminar
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
