@@ -44,6 +44,21 @@ const limiterGatos = rateLimit({
 app.use("/gato", limiterGatos);
 app.use("/gatos", limiterGatos);
 
+// Página principal: confirma que la API está funcionando
+app.get("/", (req, res) => {
+  res.status(200).json({
+    mensaje: "API de gatos funcionando correctamente.",
+    rutas: {
+      "GET /gatos": "Listar todos los gatos",
+      "GET /gatos/buscar?q=texto": "Buscar por nombre, raza, edad, peso o fecha",
+      "POST /gato": "Registrar gato (form-data: nombre, edad, peso, raza, imagen)",
+      "PUT /gato/:id": "Actualizar gato (form-data; imagen opcional)",
+      "DELETE /gato/:id": "Eliminar gato",
+    },
+    limite: "3 peticiones por minuto por IP en /gato y /gatos",
+  });
+});
+
 // Rutas
 app.use(gatoRoutes);
 
