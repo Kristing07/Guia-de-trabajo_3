@@ -16,5 +16,8 @@ if (!getApps().length) {
 
 const db = getFirestore();
 
+// Si un campo viene vacío (undefined) lo omite en vez de lanzar error
+db.settings({ ignoreUndefinedProperties: true });
+
 export default db;
 
