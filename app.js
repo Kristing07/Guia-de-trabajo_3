@@ -51,6 +51,7 @@ app.get("/", (req, res) => {
     rutas: {
       "GET /gatos": "Listar todos los gatos",
       "GET /gatos/buscar?q=texto": "Buscar por nombre, raza, edad, peso o fecha",
+      "GET /gatos/enviar-email": "Enviar el listado de gatos por correo (EmailJS)",
       "POST /gato": "Registrar gato (form-data: nombre, edad, peso, raza, imagen)",
       "PUT /gato/:id": "Actualizar gato (form-data; imagen opcional)",
       "DELETE /gato/:id": "Eliminar gato",
