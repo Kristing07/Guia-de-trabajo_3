@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";  //Para que el frontend pueda llamar
 import rateLimit, { ipKeyGenerator } from "express-rate-limit";
 import gatoRoutes from "./routes/gato.routes.js";
+import estadisticasRoutes from "./routes/estadisticas.routes.js";
 import db from "./firebase.js"; // Para el registro de la bitácora
 const app = express();
 
@@ -55,6 +56,8 @@ app.get("/", (req, res) => {
       "POST /gato": "Registrar gato (form-data: nombre, edad, peso, raza, imagen)",
       "PUT /gato/:id": "Actualizar gato (form-data; imagen opcional)",
       "DELETE /gato/:id": "Eliminar gato",
+      "GET /estadisticas": "Estadísticas de los gatos en JSON",
+      "GET /estadisticas/excel": "Descargar las estadísticas en Excel",
     },
     limite: "3 peticiones por minuto por IP en /gato y /gatos",
   });
@@ -62,6 +65,7 @@ app.get("/", (req, res) => {
 
 // Rutas
 app.use(gatoRoutes);
+app.use(estadisticasRoutes); // rutas de estadísticas y exportación a Excel
 
 // 404
 app.use((req, res) => {
