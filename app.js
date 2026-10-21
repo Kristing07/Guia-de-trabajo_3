@@ -58,6 +58,8 @@ app.get("/", (req, res) => {
       "DELETE /gato/:id": "Eliminar gato",
       "GET /estadisticas": "Estadísticas de los gatos en JSON",
       "GET /estadisticas/excel": "Descargar las estadísticas en Excel",
+      "GET /estadisticas/pdf": "Descargar las estadísticas en PDF",
+      "GET /estadisticas/csv": "Descargar el listado de gatos en CSV",
     },
     limite: "3 peticiones por minuto por IP en /gato y /gatos",
   });
